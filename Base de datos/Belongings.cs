@@ -19,6 +19,8 @@ namespace Base_de_datos
         public string category { get; set; }
         public string description { get; set; }
         public string images { get; set; }
+        public string characteristics { get; set; }
+        public string loanAmount { get; set; }
     
         public virtual Contracts Contract { get; set; }
     }

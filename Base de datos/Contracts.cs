@@ -28,6 +28,10 @@ namespace Base_de_datos
         public string state { get; set; }
         public int iva { get; set; }
         public Nullable<int> interestRate { get; set; }
+        public string endorsementAmount { get; set; }
+        public string settlementAmount { get; set; }
+        public string loanTerm { get; set; }
+        public string amountOwed { get; set; }
     
         public virtual Staff Staff { get; set; }
         public virtual Customers Customer { get; set; }
