@@ -32,5 +32,8 @@ namespace Base_de_datos
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<Sales> Sales { get; set; }
         public virtual DbSet<Operations> Operations { get; set; }
+        public virtual DbSet<ArticlesSetAside> ArticlesSetAsides { get; set; }
+        public virtual DbSet<ImagesIdentification> ImagesIdentifications { get; set; }
+        public virtual DbSet<ImagesBelonging> ImagesBelongings { get; set; }
     }
 }

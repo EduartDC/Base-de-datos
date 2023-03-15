@@ -23,11 +23,12 @@ namespace Base_de_datos
         public int idSale { get; set; }
         public double total { get; set; }
         public double subtotal { get; set; }
-        public double amount { get; set; }
         public System.DateTime saleDate { get; set; }
+        public string discount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Articles> Articles { get; set; }
-        public virtual Staff Staff { get; set; }
+        public virtual Customers Customer { get; set; }
+        public virtual Operations Operation { get; set; }
     }
 }

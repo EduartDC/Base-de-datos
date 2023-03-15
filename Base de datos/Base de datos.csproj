@@ -67,6 +67,9 @@
     <Compile Include="Articles.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="ArticlesSetAside.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Belongings.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -80,6 +83,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EmpeñoDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ImagesBelonging.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImagesIdentification.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Operations.cs">
       <DependentUpon>DataBase.tt</DependentUpon>

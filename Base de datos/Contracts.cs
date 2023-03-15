@@ -18,24 +18,25 @@ namespace Base_de_datos
         public Contracts()
         {
             this.Belongings = new HashSet<Belongings>();
+            this.Operations = new HashSet<Operations>();
         }
     
         public int idContract { get; set; }
-        public double amountLoaned { get; set; }
+        public double loanAmount { get; set; }
         public Nullable<int> idContractPrevious { get; set; }
         public System.DateTime deadlineDate { get; set; }
         public System.DateTime creationDate { get; set; }
         public string state { get; set; }
         public int iva { get; set; }
         public Nullable<int> interestRate { get; set; }
-        public string endorsementAmount { get; set; }
-        public string settlementAmount { get; set; }
-        public string loanTerm { get; set; }
-        public string amountOwed { get; set; }
+        public double renewalFee { get; set; }
+        public double settlementAmount { get; set; }
+        public int duration { get; set; }
     
-        public virtual Staff Staff { get; set; }
         public virtual Customers Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Belongings> Belongings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Operations> Operations { get; set; }
     }
 }

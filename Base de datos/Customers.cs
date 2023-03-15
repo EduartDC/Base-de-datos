@@ -18,6 +18,9 @@ namespace Base_de_datos
         public Customers()
         {
             this.Contracts = new HashSet<Contracts>();
+            this.ImagesIdentifications = new HashSet<ImagesIdentification>();
+            this.Sales = new HashSet<Sales>();
+            this.SetAsides = new HashSet<SetAside>();
         }
     
         public int idCustomer { get; set; }
@@ -31,5 +34,11 @@ namespace Base_de_datos
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contracts> Contracts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ImagesIdentification> ImagesIdentifications { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sales> Sales { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SetAside> SetAsides { get; set; }
     }
 }

@@ -14,12 +14,19 @@ namespace Base_de_datos
     
     public partial class Articles : Belongings
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Articles()
+        {
+            this.ArticlesSetAside = new HashSet<ArticlesSetAside>();
+        }
+    
         public int idArticle { get; set; }
         public string barCode { get; set; }
-        public Nullable<double> price { get; set; }
+        public Nullable<double> sellingPrice { get; set; }
         public string state { get; set; }
     
         public virtual Sales Sale { get; set; }
-        public virtual SetAside SetAside { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ArticlesSetAside> ArticlesSetAside { get; set; }
     }
 }

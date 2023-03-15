@@ -14,14 +14,22 @@ namespace Base_de_datos
     
     public partial class Belongings
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Belongings()
+        {
+            this.ImagesBelongings = new HashSet<ImagesBelonging>();
+        }
+    
         public int idBelonging { get; set; }
-        public double amountAppraised { get; set; }
+        public double appraisalValue { get; set; }
         public string category { get; set; }
         public string description { get; set; }
-        public string images { get; set; }
         public string characteristics { get; set; }
-        public string loanAmount { get; set; }
+        public double loanAmount { get; set; }
+        public string serialNumber { get; set; }
     
         public virtual Contracts Contract { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ImagesBelonging> ImagesBelongings { get; set; }
     }
 }

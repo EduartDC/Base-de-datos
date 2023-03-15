@@ -12,17 +12,11 @@ namespace Base_de_datos
     using System;
     using System.Collections.Generic;
     
-    public partial class Operations
+    public partial class ImagesBelonging
     {
-        public int idOperation { get; set; }
-        public System.DateTime operationDate { get; set; }
-        public double paymentAmount { get; set; }
-        public double receivedAmount { get; set; }
-        public double changeAmount { get; set; }
+        public int idImagenBelonging { get; set; }
+        public string imagen { get; set; }
     
-        public virtual Staff Staff { get; set; }
-        public virtual SetAside SetAside { get; set; }
-        public virtual Sales Sale { get; set; }
-        public virtual Contracts Contract { get; set; }
+        public virtual Belongings Belonging { get; set; }
     }
 }

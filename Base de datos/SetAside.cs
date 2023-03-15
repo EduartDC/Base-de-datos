@@ -17,18 +17,21 @@ namespace Base_de_datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SetAside()
         {
-            this.Articles = new HashSet<Articles>();
+            this.Operations = new HashSet<Operations>();
+            this.ArticlesSetAside = new HashSet<ArticlesSetAside>();
         }
     
         public int idSetAside { get; set; }
         public System.DateTime creationDate { get; set; }
         public System.DateTime deadlineDate { get; set; }
-        public double amount { get; set; }
+        public double totalAmount { get; set; }
         public double reaminingAmount { get; set; }
-        public string customerName { get; set; }
+        public string percentage { get; set; }
     
+        public virtual Customers Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Articles> Articles { get; set; }
-        public virtual Staff Staff { get; set; }
+        public virtual ICollection<Operations> Operations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ArticlesSetAside> ArticlesSetAside { get; set; }
     }
 }

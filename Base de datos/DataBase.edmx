@@ -272,25 +272,9 @@
             <End Role="Sales" EntitySet="Sales" />
             <End Role="Articles" EntitySet="Belongings" />
           </AssociationSet>
-          <AssociationSet Name="SetAsideArticles" Association="MexModel.SetAsideArticles">
-            <End Role="SetAside" EntitySet="SetAsides" />
-            <End Role="Articles" EntitySet="Belongings" />
-          </AssociationSet>
-          <AssociationSet Name="StaffSetAside" Association="MexModel.StaffSetAside">
-            <End Role="Staff" EntitySet="Staffs" />
-            <End Role="SetAside" EntitySet="SetAsides" />
-          </AssociationSet>
-          <AssociationSet Name="StaffSales" Association="MexModel.StaffSales">
-            <End Role="Staff" EntitySet="Staffs" />
-            <End Role="Sales" EntitySet="Sales" />
-          </AssociationSet>
           <AssociationSet Name="StaffOperations" Association="MexModel.StaffOperations">
             <End Role="Staff" EntitySet="Staffs" />
             <End Role="Operations" EntitySet="Operations" />
-          </AssociationSet>
-          <AssociationSet Name="StaffContracts" Association="MexModel.StaffContracts">
-            <End Role="Staff" EntitySet="Staffs" />
-            <End Role="Contracts" EntitySet="Contracts" />
           </AssociationSet>
           <AssociationSet Name="CustomersContracts" Association="MexModel.CustomersContracts">
             <End Role="Customers" EntitySet="Customers" />
@@ -300,6 +284,45 @@
             <End Role="Contracts" EntitySet="Contracts" />
             <End Role="Belongings" EntitySet="Belongings" />
           </AssociationSet>
+          <EntitySet Name="ArticlesSetAsides" EntityType="MexModel.ArticlesSetAside" />
+          <EntitySet Name="ImagesIdentifications" EntityType="MexModel.ImagesIdentification" />
+          <EntitySet Name="ImagesBelongings" EntityType="MexModel.ImagesBelonging" />
+          <AssociationSet Name="BelongingsImagesBelonging" Association="MexModel.BelongingsImagesBelonging">
+            <End Role="Belongings" EntitySet="Belongings" />
+            <End Role="ImagesBelonging" EntitySet="ImagesBelongings" />
+          </AssociationSet>
+          <AssociationSet Name="CustomersImagesIdentification" Association="MexModel.CustomersImagesIdentification">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="ImagesIdentification" EntitySet="ImagesIdentifications" />
+          </AssociationSet>
+          <AssociationSet Name="CustomersSales" Association="MexModel.CustomersSales">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="CustomersSetAside" Association="MexModel.CustomersSetAside">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="SetAside" EntitySet="SetAsides" />
+          </AssociationSet>
+          <AssociationSet Name="SetAsideOperations" Association="MexModel.SetAsideOperations">
+            <End Role="SetAside" EntitySet="SetAsides" />
+            <End Role="Operations" EntitySet="Operations" />
+          </AssociationSet>
+          <AssociationSet Name="SalesOperations" Association="MexModel.SalesOperations">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="Operations" EntitySet="Operations" />
+          </AssociationSet>
+          <AssociationSet Name="ContractsOperations" Association="MexModel.ContractsOperations">
+            <End Role="Contracts" EntitySet="Contracts" />
+            <End Role="Operations" EntitySet="Operations" />
+          </AssociationSet>
+          <AssociationSet Name="SetAsideArticlesSetAside" Association="MexModel.SetAsideArticlesSetAside">
+            <End Role="SetAside" EntitySet="SetAsides" />
+            <End Role="ArticlesSetAside" EntitySet="ArticlesSetAsides" />
+          </AssociationSet>
+          <AssociationSet Name="ArticlesArticlesSetAside" Association="MexModel.ArticlesArticlesSetAside">
+            <End Role="Articles" EntitySet="Belongings" />
+            <End Role="ArticlesSetAside" EntitySet="ArticlesSetAsides" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="SetAside">
           <Key>
@@ -308,24 +331,26 @@
           <Property Name="idSetAside" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="creationDate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="deadlineDate" Type="DateTime" Nullable="false" />
-          <Property Name="amount" Type="Double" Nullable="false" />
+          <Property Name="totalAmount" Type="Double" Nullable="false" />
           <Property Name="reaminingAmount" Type="Double" Nullable="false" />
-          <Property Name="customerName" Type="String" Nullable="false" />
-          <NavigationProperty Name="Articles" Relationship="MexModel.SetAsideArticles" FromRole="SetAside" ToRole="Articles" />
-          <NavigationProperty Name="Staff" Relationship="MexModel.StaffSetAside" FromRole="SetAside" ToRole="Staff" />
+          <NavigationProperty Name="Customer" Relationship="MexModel.CustomersSetAside" FromRole="SetAside" ToRole="Customers" />
+          <Property Name="percentage" Type="String" Nullable="false" />
+          <NavigationProperty Name="Operations" Relationship="MexModel.SetAsideOperations" FromRole="SetAside" ToRole="Operations" />
+          <NavigationProperty Name="ArticlesSetAside" Relationship="MexModel.SetAsideArticlesSetAside" FromRole="SetAside" ToRole="ArticlesSetAside" />
         </EntityType>
         <EntityType Name="Belongings">
           <Key>
             <PropertyRef Name="idBelonging" />
           </Key>
           <Property Name="idBelonging" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="amountAppraised" Type="Double" Nullable="false" />
+          <Property Name="appraisalValue" Type="Double" Nullable="false" />
           <Property Name="category" Type="String" Nullable="false" />
           <Property Name="description" Type="String" Nullable="true" />
-          <Property Name="images" Type="String" Nullable="false" />
           <NavigationProperty Name="Contract" Relationship="MexModel.ContractsBelongings" FromRole="Belongings" ToRole="Contracts" />
           <Property Name="characteristics" Type="String" Nullable="false" />
-          <Property Name="loanAmount" Type="String" Nullable="false" />
+          <Property Name="loanAmount" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ImagesBelongings" Relationship="MexModel.BelongingsImagesBelonging" FromRole="Belongings" ToRole="ImagesBelonging" />
+          <Property Name="serialNumber" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -340,26 +365,28 @@
           <Property Name="identification" Type="String" Nullable="true" />
           <NavigationProperty Name="Contracts" Relationship="MexModel.CustomersContracts" FromRole="Customers" ToRole="Contracts" />
           <Property Name="telephonNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ImagesIdentifications" Relationship="MexModel.CustomersImagesIdentification" FromRole="Customers" ToRole="ImagesIdentification" />
+          <NavigationProperty Name="Sales" Relationship="MexModel.CustomersSales" FromRole="Customers" ToRole="Sales" />
+          <NavigationProperty Name="SetAsides" Relationship="MexModel.CustomersSetAside" FromRole="Customers" ToRole="SetAside" />
         </EntityType>
         <EntityType Name="Contracts">
           <Key>
             <PropertyRef Name="idContract" />
           </Key>
           <Property Name="idContract" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="amountLoaned" Type="Double" Nullable="false" />
+          <Property Name="loanAmount" Type="Double" Nullable="false" />
           <Property Name="idContractPrevious" Type="Int32" Nullable="true" />
           <Property Name="deadlineDate" Type="DateTime" Nullable="false" />
           <Property Name="creationDate" Type="DateTime" Nullable="false" />
           <Property Name="state" Type="String" Nullable="false" />
           <Property Name="iva" Type="Int32" Nullable="false" />
           <Property Name="interestRate" Type="Int32" Nullable="true" />
-          <NavigationProperty Name="Staff" Relationship="MexModel.StaffContracts" FromRole="Contracts" ToRole="Staff" />
           <NavigationProperty Name="Customer" Relationship="MexModel.CustomersContracts" FromRole="Contracts" ToRole="Customers" />
           <NavigationProperty Name="Belongings" Relationship="MexModel.ContractsBelongings" FromRole="Contracts" ToRole="Belongings" />
-          <Property Name="endorsementAmount" Type="String" Nullable="false" />
-          <Property Name="settlementAmount" Type="String" Nullable="false" />
-          <Property Name="loanTerm" Type="String" Nullable="false" />
-          <Property Name="amountOwed" Type="String" Nullable="false" />
+          <Property Name="renewalFee" Type="Double" Nullable="false" />
+          <Property Name="settlementAmount" Type="Double" Nullable="false" />
+          <Property Name="duration" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Operations" Relationship="MexModel.ContractsOperations" FromRole="Contracts" ToRole="Operations" />
         </EntityType>
         <EntityType Name="Staff">
           <Key>
@@ -372,10 +399,7 @@
           <Property Name="lastName" Type="String" Nullable="false" />
           <Property Name="userName" Type="String" Nullable="false" />
           <Property Name="rol" Type="String" Nullable="false" />
-          <NavigationProperty Name="SetAsides" Relationship="MexModel.StaffSetAside" FromRole="Staff" ToRole="SetAside" />
-          <NavigationProperty Name="Sales" Relationship="MexModel.StaffSales" FromRole="Staff" ToRole="Sales" />
           <NavigationProperty Name="Operations" Relationship="MexModel.StaffOperations" FromRole="Staff" ToRole="Operations" />
-          <NavigationProperty Name="Contracts" Relationship="MexModel.StaffContracts" FromRole="Staff" ToRole="Contracts" />
         </EntityType>
         <EntityType Name="Sales">
           <Key>
@@ -384,52 +408,41 @@
           <Property Name="idSale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="total" Type="Double" Nullable="false" />
           <Property Name="subtotal" Type="Double" Nullable="false" />
-          <Property Name="amount" Type="Double" Nullable="false" />
           <Property Name="saleDate" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="Articles" Relationship="MexModel.SalesArticles" FromRole="Sales" ToRole="Articles" />
-          <NavigationProperty Name="Staff" Relationship="MexModel.StaffSales" FromRole="Sales" ToRole="Staff" />
+          <Property Name="discount" Type="String" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="MexModel.CustomersSales" FromRole="Sales" ToRole="Customers" />
+          <NavigationProperty Name="Operation" Relationship="MexModel.SalesOperations" FromRole="Sales" ToRole="Operations" />
         </EntityType>
         <EntityType Name="Articles" BaseType="MexModel.Belongings">
           <Property Name="idArticle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="barCode" Type="String" Nullable="true" />
-          <Property Name="price" Type="Double" Nullable="true" />
+          <Property Name="sellingPrice" Type="Double" Nullable="true" />
           <Property Name="state" Type="String" Nullable="false" />
           <NavigationProperty Name="Sale" Relationship="MexModel.SalesArticles" FromRole="Articles" ToRole="Sales" />
-          <NavigationProperty Name="SetAside" Relationship="MexModel.SetAsideArticles" FromRole="Articles" ToRole="SetAside" />
+          <NavigationProperty Name="ArticlesSetAside" Relationship="MexModel.ArticlesArticlesSetAside" FromRole="Articles" ToRole="ArticlesSetAside" />
         </EntityType>
         <EntityType Name="Operations">
           <Key>
             <PropertyRef Name="idOperation" />
           </Key>
           <Property Name="idOperation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="concept" Type="String" Nullable="false" />
           <Property Name="operationDate" Type="DateTime" Nullable="false" />
-          <Property Name="amount" Type="Double" Nullable="false" />
+          <Property Name="paymentAmount" Type="Double" Nullable="false" />
           <NavigationProperty Name="Staff" Relationship="MexModel.StaffOperations" FromRole="Operations" ToRole="Staff" />
+          <Property Name="receivedAmount" Type="Double" Nullable="false" />
+          <Property Name="changeAmount" Type="Double" Nullable="false" />
+          <NavigationProperty Name="SetAside" Relationship="MexModel.SetAsideOperations" FromRole="Operations" ToRole="SetAside" />
+          <NavigationProperty Name="Sale" Relationship="MexModel.SalesOperations" FromRole="Operations" ToRole="Sales" />
+          <NavigationProperty Name="Contract" Relationship="MexModel.ContractsOperations" FromRole="Operations" ToRole="Contracts" />
         </EntityType>
         <Association Name="SalesArticles">
           <End Type="MexModel.Sales" Role="Sales" Multiplicity="1" />
           <End Type="MexModel.Articles" Role="Articles" Multiplicity="*" />
         </Association>
-        <Association Name="SetAsideArticles">
-          <End Type="MexModel.SetAside" Role="SetAside" Multiplicity="1" />
-          <End Type="MexModel.Articles" Role="Articles" Multiplicity="*" />
-        </Association>
-        <Association Name="StaffSetAside">
-          <End Type="MexModel.Staff" Role="Staff" Multiplicity="1" />
-          <End Type="MexModel.SetAside" Role="SetAside" Multiplicity="*" />
-        </Association>
-        <Association Name="StaffSales">
-          <End Type="MexModel.Staff" Role="Staff" Multiplicity="1" />
-          <End Type="MexModel.Sales" Role="Sales" Multiplicity="*" />
-        </Association>
         <Association Name="StaffOperations">
           <End Type="MexModel.Staff" Role="Staff" Multiplicity="1" />
           <End Type="MexModel.Operations" Role="Operations" Multiplicity="*" />
-        </Association>
-        <Association Name="StaffContracts">
-          <End Type="MexModel.Staff" Role="Staff" Multiplicity="1" />
-          <End Type="MexModel.Contracts" Role="Contracts" Multiplicity="*" />
         </Association>
         <Association Name="CustomersContracts">
           <End Type="MexModel.Customers" Role="Customers" Multiplicity="1" />
@@ -438,6 +451,67 @@
         <Association Name="ContractsBelongings">
           <End Type="MexModel.Contracts" Role="Contracts" Multiplicity="1" />
           <End Type="MexModel.Belongings" Role="Belongings" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ArticlesSetAside">
+          <Key>
+            <PropertyRef Name="idArticlesSetAside" />
+          </Key>
+          <Property Name="idArticlesSetAside" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="discount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SetAside" Relationship="MexModel.SetAsideArticlesSetAside" FromRole="ArticlesSetAside" ToRole="SetAside" />
+          <NavigationProperty Name="Article" Relationship="MexModel.ArticlesArticlesSetAside" FromRole="ArticlesSetAside" ToRole="Articles" />
+        </EntityType>
+        <EntityType Name="ImagesIdentification">
+          <Key>
+            <PropertyRef Name="idImagenIdentification" />
+          </Key>
+          <Property Name="idImagenIdentification" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Customer" Relationship="MexModel.CustomersImagesIdentification" FromRole="ImagesIdentification" ToRole="Customers" />
+          <Property Name="imagen" Type="Binary" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ImagesBelonging">
+          <Key>
+            <PropertyRef Name="idImagenBelonging" />
+          </Key>
+          <Property Name="idImagenBelonging" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Belonging" Relationship="MexModel.BelongingsImagesBelonging" FromRole="ImagesBelonging" ToRole="Belongings" />
+          <Property Name="imagen" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="BelongingsImagesBelonging">
+          <End Type="MexModel.Belongings" Role="Belongings" Multiplicity="1" />
+          <End Type="MexModel.ImagesBelonging" Role="ImagesBelonging" Multiplicity="*" />
+        </Association>
+        <Association Name="CustomersImagesIdentification">
+          <End Type="MexModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="MexModel.ImagesIdentification" Role="ImagesIdentification" Multiplicity="*" />
+        </Association>
+        <Association Name="CustomersSales">
+          <End Type="MexModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="MexModel.Sales" Role="Sales" Multiplicity="*" />
+        </Association>
+        <Association Name="CustomersSetAside">
+          <End Type="MexModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="MexModel.SetAside" Role="SetAside" Multiplicity="*" />
+        </Association>
+        <Association Name="SetAsideOperations">
+          <End Type="MexModel.SetAside" Role="SetAside" Multiplicity="1" />
+          <End Type="MexModel.Operations" Role="Operations" Multiplicity="*" />
+        </Association>
+        <Association Name="SalesOperations">
+          <End Type="MexModel.Sales" Role="Sales" Multiplicity="1" />
+          <End Type="MexModel.Operations" Role="Operations" Multiplicity="1" />
+        </Association>
+        <Association Name="ContractsOperations">
+          <End Type="MexModel.Contracts" Role="Contracts" Multiplicity="1" />
+          <End Type="MexModel.Operations" Role="Operations" Multiplicity="*" />
+        </Association>
+        <Association Name="SetAsideArticlesSetAside">
+          <End Type="MexModel.SetAside" Role="SetAside" Multiplicity="1" />
+          <End Type="MexModel.ArticlesSetAside" Role="ArticlesSetAside" Multiplicity="*" />
+        </Association>
+        <Association Name="ArticlesArticlesSetAside">
+          <End Type="MexModel.Articles" Role="Articles" Multiplicity="1" />
+          <End Type="MexModel.ArticlesSetAside" Role="ArticlesSetAside" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -451,9 +525,8 @@
           <ScalarProperty Name="idSetAside" ColumnName="idSetAside" />
           <ScalarProperty Name="creationDate" ColumnName="creationDate" />
           <ScalarProperty Name="deadlineDate" ColumnName="deadlineDate" />
-          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="totalAmount" ColumnName="amount" />
           <ScalarProperty Name="reaminingAmount" ColumnName="reaminingAmount" />
-          <ScalarProperty Name="customerName" ColumnName="customerName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -461,10 +534,9 @@
       <EntityTypeMapping TypeName="IsTypeOf(MexModel.Belongings)">
         <MappingFragment StoreEntitySet="Belongings">
           <ScalarProperty Name="idBelonging" ColumnName="idBelonging" />
-          <ScalarProperty Name="amountAppraised" ColumnName="amountAppraised" />
+          <ScalarProperty Name="appraisalValue" ColumnName="amountAppraised" />
           <ScalarProperty Name="category" ColumnName="category" />
           <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="images" ColumnName="images" />
         </MappingFragment>
       </EntityTypeMapping>
       <EntityTypeMapping TypeName="IsTypeOf(MexModel.Articles)">
@@ -472,7 +544,7 @@
           <ScalarProperty Name="idBelonging" ColumnName="idBelonging" />
           <ScalarProperty Name="idArticle" ColumnName="idArticle" />
           <ScalarProperty Name="barCode" ColumnName="barCode" />
-          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="sellingPrice" ColumnName="price" />
           <ScalarProperty Name="state" ColumnName="state" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -494,7 +566,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(MexModel.Contracts)">
         <MappingFragment StoreEntitySet="Contracts">
           <ScalarProperty Name="idContract" ColumnName="idContract" />
-          <ScalarProperty Name="amountLoaned" ColumnName="amountLoaned" />
+          <ScalarProperty Name="loanAmount" ColumnName="amountLoaned" />
           <ScalarProperty Name="idContractPrevious" ColumnName="idContractPrevious" />
           <ScalarProperty Name="deadlineDate" ColumnName="deadlineDate" />
           <ScalarProperty Name="creationDate" ColumnName="creationDate" />
@@ -523,7 +595,6 @@
           <ScalarProperty Name="idSale" ColumnName="idSale" />
           <ScalarProperty Name="total" ColumnName="total" />
           <ScalarProperty Name="subtotal" ColumnName="subtotal" />
-          <ScalarProperty Name="amount" ColumnName="amount" />
           <ScalarProperty Name="saleDate" ColumnName="saleDate" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -532,9 +603,8 @@
       <EntityTypeMapping TypeName="IsTypeOf(MexModel.Operations)">
         <MappingFragment StoreEntitySet="Operations">
           <ScalarProperty Name="idOperation" ColumnName="idOperation" />
-          <ScalarProperty Name="concept" ColumnName="concept" />
           <ScalarProperty Name="operationDate" ColumnName="operationDate" />
-          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="paymentAmount" ColumnName="amount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -546,44 +616,12 @@
         <ScalarProperty Name="idBelonging" ColumnName="idBelonging" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="SetAsideArticles" TypeName="MexModel.SetAsideArticles" StoreEntitySet="Belongings_Articles">
-      <EndProperty Name="SetAside">
-        <ScalarProperty Name="idSetAside" ColumnName="SetAside_idSetAside" />
-      </EndProperty>
-      <EndProperty Name="Articles">
-        <ScalarProperty Name="idBelonging" ColumnName="idBelonging" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="StaffSetAside" TypeName="MexModel.StaffSetAside" StoreEntitySet="SetAsides">
-      <EndProperty Name="Staff">
-        <ScalarProperty Name="idStaff" ColumnName="Staff_idStaff" />
-      </EndProperty>
-      <EndProperty Name="SetAside">
-        <ScalarProperty Name="idSetAside" ColumnName="idSetAside" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="StaffSales" TypeName="MexModel.StaffSales" StoreEntitySet="Sales">
-      <EndProperty Name="Staff">
-        <ScalarProperty Name="idStaff" ColumnName="Staff_idStaff" />
-      </EndProperty>
-      <EndProperty Name="Sales">
-        <ScalarProperty Name="idSale" ColumnName="idSale" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="StaffOperations" TypeName="MexModel.StaffOperations" StoreEntitySet="Operations">
       <EndProperty Name="Staff">
         <ScalarProperty Name="idStaff" ColumnName="Staff_idStaff" />
       </EndProperty>
       <EndProperty Name="Operations">
         <ScalarProperty Name="idOperation" ColumnName="idOperation" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="StaffContracts" TypeName="MexModel.StaffContracts" StoreEntitySet="Contracts">
-      <EndProperty Name="Staff">
-        <ScalarProperty Name="idStaff" ColumnName="Staff_idStaff" />
-      </EndProperty>
-      <EndProperty Name="Contracts">
-        <ScalarProperty Name="idContract" ColumnName="idContract" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="CustomersContracts" TypeName="MexModel.CustomersContracts" StoreEntitySet="Contracts">
