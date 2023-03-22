@@ -15,7 +15,7 @@ namespace Base_de_datos
     public partial class ImagesBelonging
     {
         public int idImagenBelonging { get; set; }
-        public string imagen { get; set; }
+        public byte[] imagen { get; set; }
     
         public virtual Belongings Belonging { get; set; }
     }

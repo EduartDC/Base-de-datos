@@ -22,7 +22,7 @@ namespace Base_de_datos
     
         public virtual Staff Staff { get; set; }
         public virtual SetAside SetAside { get; set; }
-        public virtual Sales Sale { get; set; }
         public virtual Contracts Contract { get; set; }
+        public virtual Sales Sale { get; set; }
     }
 }

@@ -24,6 +24,9 @@ namespace Base_de_datos
         public string barCode { get; set; }
         public Nullable<double> sellingPrice { get; set; }
         public string state { get; set; }
+        public string customerProfit { get; set; }
+        public string storeProfit { get; set; }
+        public System.DateTime creationDate { get; set; }
     
         public virtual Sales Sale { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

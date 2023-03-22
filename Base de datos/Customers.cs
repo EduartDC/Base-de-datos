@@ -31,6 +31,7 @@ namespace Base_de_datos
         public string lastName { get; set; }
         public string identification { get; set; }
         public int telephonNumber { get; set; }
+        public string cumulativeProfit { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contracts> Contracts { get; set; }
