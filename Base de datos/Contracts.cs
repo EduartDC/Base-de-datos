@@ -26,7 +26,7 @@ namespace Base_de_datos
         public Nullable<int> idContractPrevious { get; set; }
         public System.DateTime deadlineDate { get; set; }
         public System.DateTime creationDate { get; set; }
-        public string state { get; set; }
+        public string stateContract { get; set; }
         public int iva { get; set; }
         public Nullable<int> interestRate { get; set; }
         public double renewalFee { get; set; }

@@ -16,6 +16,7 @@
     <EntitySet Name="ArticlesSetAsides" EntityType="MexModel.Store.ArticlesSetAsides" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ImagesIdentifications" EntityType="MexModel.Store.ImagesIdentifications" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ImagesBelongings" EntityType="MexModel.Store.ImagesBelongings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Metrics" EntityType="MexModel.Store.Metrics" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Belongings_Articles" EntityType="MexModel.Store.Belongings_Articles" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="SalesArticles" Association="MexModel.Store.SalesArticles">
       <End Role="Sales" EntitySet="Sales" />
@@ -110,7 +111,7 @@
     <Property Name="firstName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="lastName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="identification" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="telephonNumber" Type="int" Nullable="false" />
+    <Property Name="telephonNumber" Type="bigint" Nullable="false" />
     <Property Name="cumulativeProfit" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Contracts">
@@ -122,7 +123,7 @@
     <Property Name="idContractPrevious" Type="int" Nullable="true" />
     <Property Name="deadlineDate" Type="datetime" Nullable="false" />
     <Property Name="creationDate" Type="datetime" Nullable="false" />
-    <Property Name="state" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="stateContract" Type="nvarchar(max)" Nullable="false" />
     <Property Name="iva" Type="int" Nullable="false" />
     <Property Name="interestRate" Type="int" Nullable="true" />
     <Property Name="renewalFee" Type="float" Nullable="false" />
@@ -135,7 +136,7 @@
       <PropertyRef Name="idStaff" />
     </Key>
     <Property Name="idStaff" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="statusStaff" Type="nvarchar(max)" Nullable="false" />
     <Property Name="password" Type="nvarchar(max)" Nullable="false" />
     <Property Name="fisrtName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="lastName" Type="nvarchar(max)" Nullable="false" />
@@ -192,16 +193,24 @@
     <Property Name="imagen" Type="varbinary(max)" Nullable="false" />
     <Property Name="Belonging_idBelonging" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Metrics">
+    <Key>
+      <PropertyRef Name="idMetrics" />
+    </Key>
+    <Property Name="idMetrics" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="interestRate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IVA" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
   <EntityType Name="Belongings_Articles">
     <Key>
       <PropertyRef Name="idBelonging" />
     </Key>
     <Property Name="idArticle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="barCode" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="sellingPrice" Type="float" Nullable="true" />
-    <Property Name="state" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="customerProfit" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="storeProfit" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="sellingPrice" Type="float" Nullable="false" />
+    <Property Name="stateArticle" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="customerProfit" Type="float" Nullable="false" />
+    <Property Name="storeProfit" Type="float" Nullable="false" />
     <Property Name="creationDate" Type="datetime" Nullable="false" />
     <Property Name="idBelonging" Type="int" Nullable="false" />
     <Property Name="Sale_idSale" Type="int" Nullable="false" />
@@ -443,6 +452,7 @@
             <End Role="Operations" EntitySet="Operations" />
             <End Role="Sales" EntitySet="Sales" />
           </AssociationSet>
+          <EntitySet Name="Metrics" EntityType="MexModel.Metrics" />
         </EntityContainer>
         <EntityType Name="SetAside">
           <Key>
@@ -484,7 +494,7 @@
           <Property Name="lastName" Type="String" Nullable="false" />
           <Property Name="identification" Type="String" Nullable="true" />
           <NavigationProperty Name="Contracts" Relationship="MexModel.CustomersContracts" FromRole="Customers" ToRole="Contracts" />
-          <Property Name="telephonNumber" Type="Int32" Nullable="false" />
+          <Property Name="telephonNumber" Type="Int64" Nullable="false" />
           <NavigationProperty Name="ImagesIdentifications" Relationship="MexModel.CustomersImagesIdentification" FromRole="Customers" ToRole="ImagesIdentification" />
           <NavigationProperty Name="Sales" Relationship="MexModel.CustomersSales" FromRole="Customers" ToRole="Sales" />
           <NavigationProperty Name="SetAsides" Relationship="MexModel.CustomersSetAside" FromRole="Customers" ToRole="SetAside" />
@@ -499,7 +509,7 @@
           <Property Name="idContractPrevious" Type="Int32" Nullable="true" />
           <Property Name="deadlineDate" Type="DateTime" Nullable="false" />
           <Property Name="creationDate" Type="DateTime" Nullable="false" />
-          <Property Name="state" Type="String" Nullable="false" />
+          <Property Name="stateContract" Type="String" Nullable="false" />
           <Property Name="iva" Type="Int32" Nullable="false" />
           <Property Name="interestRate" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Customer" Relationship="MexModel.CustomersContracts" FromRole="Contracts" ToRole="Customers" />
@@ -514,7 +524,7 @@
             <PropertyRef Name="idStaff" />
           </Key>
           <Property Name="idStaff" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="status" Type="String" Nullable="false" />
+          <Property Name="statusStaff" Type="String" Nullable="false" />
           <Property Name="password" Type="String" Nullable="false" />
           <Property Name="fisrtName" Type="String" Nullable="false" />
           <Property Name="lastName" Type="String" Nullable="false" />
@@ -538,12 +548,12 @@
         <EntityType Name="Articles" BaseType="MexModel.Belongings">
           <Property Name="idArticle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="barCode" Type="String" Nullable="true" />
-          <Property Name="sellingPrice" Type="Double" Nullable="true" />
-          <Property Name="state" Type="String" Nullable="false" />
+          <Property Name="sellingPrice" Type="Double" Nullable="false" />
+          <Property Name="stateArticle" Type="String" Nullable="false" />
           <NavigationProperty Name="Sale" Relationship="MexModel.SalesArticles" FromRole="Articles" ToRole="Sales" />
           <NavigationProperty Name="ArticlesSetAside" Relationship="MexModel.ArticlesArticlesSetAside" FromRole="Articles" ToRole="ArticlesSetAside" />
-          <Property Name="customerProfit" Type="String" Nullable="false" />
-          <Property Name="storeProfit" Type="String" Nullable="false" />
+          <Property Name="customerProfit" Type="Double" Nullable="false" />
+          <Property Name="storeProfit" Type="Double" Nullable="false" />
           <Property Name="creationDate" Type="DateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="Operations">
@@ -637,6 +647,14 @@
           <End Type="MexModel.Operations" Role="Operations" Multiplicity="1" />
           <End Type="MexModel.Sales" Role="Sales" Multiplicity="1" />
         </Association>
+        <EntityType Name="Metrics">
+          <Key>
+            <PropertyRef Name="idMetrics" />
+          </Key>
+          <Property Name="idMetrics" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="interestRate" Type="String" Nullable="false" />
+          <Property Name="IVA" Type="String" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -673,7 +691,7 @@
           <ScalarProperty Name="idArticle" ColumnName="idArticle" />
           <ScalarProperty Name="barCode" ColumnName="barCode" />
           <ScalarProperty Name="sellingPrice" ColumnName="sellingPrice" />
-          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="stateArticle" ColumnName="stateArticle" />
           <ScalarProperty Name="customerProfit" ColumnName="customerProfit" />
           <ScalarProperty Name="storeProfit" ColumnName="storeProfit" />
           <ScalarProperty Name="creationDate" ColumnName="creationDate" />
@@ -703,7 +721,7 @@
           <ScalarProperty Name="idContractPrevious" ColumnName="idContractPrevious" />
           <ScalarProperty Name="deadlineDate" ColumnName="deadlineDate" />
           <ScalarProperty Name="creationDate" ColumnName="creationDate" />
-          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="stateContract" ColumnName="stateContract" />
           <ScalarProperty Name="iva" ColumnName="iva" />
           <ScalarProperty Name="interestRate" ColumnName="interestRate" />
           <ScalarProperty Name="renewalFee" ColumnName="renewalFee" />
@@ -716,7 +734,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(MexModel.Staff)">
         <MappingFragment StoreEntitySet="Staffs">
           <ScalarProperty Name="idStaff" ColumnName="idStaff" />
-          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="statusStaff" ColumnName="statusStaff" />
           <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="fisrtName" ColumnName="fisrtName" />
           <ScalarProperty Name="lastName" ColumnName="lastName" />
@@ -768,6 +786,15 @@
         <MappingFragment StoreEntitySet="ImagesBelongings">
           <ScalarProperty Name="idImagenBelonging" ColumnName="idImagenBelonging" />
           <ScalarProperty Name="imagen" ColumnName="imagen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Metrics">
+      <EntityTypeMapping TypeName="IsTypeOf(MexModel.Metrics)">
+        <MappingFragment StoreEntitySet="Metrics">
+          <ScalarProperty Name="idMetrics" ColumnName="idMetrics" />
+          <ScalarProperty Name="interestRate" ColumnName="interestRate" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

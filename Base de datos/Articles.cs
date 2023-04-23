@@ -22,10 +22,10 @@ namespace Base_de_datos
     
         public int idArticle { get; set; }
         public string barCode { get; set; }
-        public Nullable<double> sellingPrice { get; set; }
-        public string state { get; set; }
-        public string customerProfit { get; set; }
-        public string storeProfit { get; set; }
+        public double sellingPrice { get; set; }
+        public string stateArticle { get; set; }
+        public double customerProfit { get; set; }
+        public double storeProfit { get; set; }
         public System.DateTime creationDate { get; set; }
     
         public virtual Sales Sale { get; set; }

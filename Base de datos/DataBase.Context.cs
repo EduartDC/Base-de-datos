@@ -35,5 +35,6 @@ namespace Base_de_datos
         public virtual DbSet<ArticlesSetAside> ArticlesSetAsides { get; set; }
         public virtual DbSet<ImagesIdentification> ImagesIdentifications { get; set; }
         public virtual DbSet<ImagesBelonging> ImagesBelongings { get; set; }
+        public virtual DbSet<Metrics> Metrics { get; set; }
     }
 }

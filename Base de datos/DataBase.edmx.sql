@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/21/2023 23:13:45
+-- Date Created: 04/23/2023 15:34:15
 -- Generated from EDMX file: C:\Users\Eduar\source\repos\Base de datos\Base de datos\DataBase.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [Mex];
+USE [EmpenoFacil];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -44,9 +44,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_SetAsideOperations]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Operations] DROP CONSTRAINT [FK_SetAsideOperations];
 GO
-IF OBJECT_ID(N'[dbo].[FK_SalesOperations]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Sales] DROP CONSTRAINT [FK_SalesOperations];
-GO
 IF OBJECT_ID(N'[dbo].[FK_ContractsOperations]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Operations] DROP CONSTRAINT [FK_ContractsOperations];
 GO
@@ -55,6 +52,9 @@ IF OBJECT_ID(N'[dbo].[FK_SetAsideArticlesSetAside]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_ArticlesArticlesSetAside]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ArticlesSetAsides] DROP CONSTRAINT [FK_ArticlesArticlesSetAside];
+GO
+IF OBJECT_ID(N'[dbo].[FK_OperationsSales]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Operations] DROP CONSTRAINT [FK_OperationsSales];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Articles_inherits_Belongings]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Belongings_Articles] DROP CONSTRAINT [FK_Articles_inherits_Belongings];
@@ -93,6 +93,9 @@ IF OBJECT_ID(N'[dbo].[ImagesIdentifications]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[ImagesBelongings]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ImagesBelongings];
+GO
+IF OBJECT_ID(N'[dbo].[Metrics]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Metrics];
 GO
 IF OBJECT_ID(N'[dbo].[Belongings_Articles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Belongings_Articles];
@@ -136,7 +139,7 @@ CREATE TABLE [dbo].[Customers] (
     [firstName] nvarchar(max)  NOT NULL,
     [lastName] nvarchar(max)  NOT NULL,
     [identification] nvarchar(max)  NULL,
-    [telephonNumber] int  NOT NULL,
+    [telephonNumber] bigint  NOT NULL,
     [cumulativeProfit] nvarchar(max)  NOT NULL
 );
 GO
@@ -148,7 +151,7 @@ CREATE TABLE [dbo].[Contracts] (
     [idContractPrevious] int  NULL,
     [deadlineDate] datetime  NOT NULL,
     [creationDate] datetime  NOT NULL,
-    [state] nvarchar(max)  NOT NULL,
+    [stateContract] nvarchar(max)  NOT NULL,
     [iva] int  NOT NULL,
     [interestRate] int  NULL,
     [renewalFee] float  NOT NULL,
@@ -161,7 +164,7 @@ GO
 -- Creating table 'Staffs'
 CREATE TABLE [dbo].[Staffs] (
     [idStaff] int IDENTITY(1,1) NOT NULL,
-    [status] nvarchar(max)  NOT NULL,
+    [statusStaff] nvarchar(max)  NOT NULL,
     [password] nvarchar(max)  NOT NULL,
     [fisrtName] nvarchar(max)  NOT NULL,
     [lastName] nvarchar(max)  NOT NULL,
@@ -220,17 +223,25 @@ CREATE TABLE [dbo].[ImagesBelongings] (
 );
 GO
 
+-- Creating table 'Metrics'
+CREATE TABLE [dbo].[Metrics] (
+    [idMetrics] int IDENTITY(1,1) NOT NULL,
+    [interestRate] nvarchar(max)  NOT NULL,
+    [IVA] nvarchar(max)  NOT NULL
+);
+GO
+
 -- Creating table 'Belongings_Articles'
 CREATE TABLE [dbo].[Belongings_Articles] (
     [idArticle] int IDENTITY(1,1) NOT NULL,
     [barCode] nvarchar(max)  NULL,
-    [sellingPrice] float  NULL,
-    [state] nvarchar(max)  NOT NULL,
-    [customerProfit] nvarchar(max)  NOT NULL,
-    [storeProfit] nvarchar(max)  NOT NULL,
+    [sellingPrice] float  NOT NULL,
+    [stateArticle] nvarchar(max)  NOT NULL,
+    [customerProfit] float  NOT NULL,
+    [storeProfit] float  NOT NULL,
     [creationDate] datetime  NOT NULL,
     [idBelonging] int  NOT NULL,
-    [Sale_idSale] int  NOT NULL
+    [Sale_idSale] int  NULL
 );
 GO
 
@@ -296,6 +307,12 @@ GO
 ALTER TABLE [dbo].[ImagesBelongings]
 ADD CONSTRAINT [PK_ImagesBelongings]
     PRIMARY KEY CLUSTERED ([idImagenBelonging] ASC);
+GO
+
+-- Creating primary key on [idMetrics] in table 'Metrics'
+ALTER TABLE [dbo].[Metrics]
+ADD CONSTRAINT [PK_Metrics]
+    PRIMARY KEY CLUSTERED ([idMetrics] ASC);
 GO
 
 -- Creating primary key on [idBelonging] in table 'Belongings_Articles'

@@ -90,6 +90,9 @@
     <Compile Include="ImagesIdentification.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Metrics.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Operations.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>

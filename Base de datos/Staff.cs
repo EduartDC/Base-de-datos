@@ -21,7 +21,7 @@ namespace Base_de_datos
         }
     
         public int idStaff { get; set; }
-        public string status { get; set; }
+        public string statusStaff { get; set; }
         public string password { get; set; }
         public string fisrtName { get; set; }
         public string lastName { get; set; }
